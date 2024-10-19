@@ -123,7 +123,7 @@ const filteredCourses = computed(() => {
 
       <!-- Course Grid Section -->
       <v-container class="py-8" style="background-color: #1e1e1e;">
-        <v-card class="pa-6">
+        <v-card class="pa-6"> 
           <v-row>
             <CourseCard
               v-for="course in filteredCourses"
