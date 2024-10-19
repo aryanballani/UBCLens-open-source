@@ -11,15 +11,15 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue'
+  import { ref, watch } from 'vue'
   import VueApexCharts from 'vue3-apexcharts'
   
-  const series = ref([
-    {
-      name: 'Students',
-      data: [5, 15, 25, 45, 40, 20]
-    }
-  ])
+const props = defineProps(['xAxisData', 'yAxisData'])
+
+const series = ref([{
+  name: 'Number of Posts',
+  data: []
+}])
   
   const chartOptions = ref({
     chart: {
@@ -31,7 +31,7 @@
     },
     colors: ['#42b883'],
     xaxis: {
-      categories: ['0-49%', '50-59%', '60-69%', '70-79%', '80-89%', '90-100%'],
+      categories: [],
       labels: {
         style: {
           colors: '#fff'
@@ -40,7 +40,7 @@
     },
     yaxis: {
       title: {
-        text: 'Number of Students',
+        text: 'Number of Posts',
         style: {
           color: '#fff'
         }
@@ -66,4 +66,16 @@
       size: 4
     }
   })
+
+// Watch for changes in xAxisData and yAxisData props
+watch(
+  () => [props.xAxisData, props.yAxisData],
+  ([newXAxisData, newYAxisData]) => {
+    // Update the x-axis categories and series data
+    chartOptions.value.xaxis.categories = newXAxisData || [] // Set categories to x-axis data
+    series.value[0].data = newYAxisData || [] // Set series data to y-axis data
+  },
+  { immediate: true }
+)
+
   </script>

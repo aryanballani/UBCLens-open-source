@@ -1,182 +1,106 @@
-<script setup>
-  import { defineProps } from 'vue'
-  import { useRouter } from 'vue-router'
-  import LineChart from './LineChart.vue'
-  import { reactive } from 'vue'
+<!-- components/Course.vue -->
+
   
-  // Defining props
-  const props = defineProps({
-    courseId: {
-      type: String,
-      required: true
-    }
-  })
-  
-  // Using router to navigate back
-  const router = useRouter()
-  
-  const goBack = () => {
-    router.push('/#app')
-  }
-
-  // Reactive object for sentiment percentages
-  const sentimentPercentages = reactive({
-    veryPositive: 25,
-    positive: 30,
-    neutral: 20,
-    negative: 15,
-    veryNegative: 10
-  })
-</script>
-
-
-
-<template>
-  <v-container fluid class="pa-0">
-    <v-row>
-      <!-- Back Button -->
-      <v-col cols="12" class="pa-4">
-        <v-btn
-          prepend-icon="mdi-arrow-left"
-          variant="text"
-          color="green"
-          @click="goBack"
-        >
-          Back to Courses
-        </v-btn>
-      </v-col>
-    </v-row>
-
-    <v-row class="fill-height">
-      <!-- Graph Section (Left side) -->
-      <v-col cols="12" md="7" class="pa-6">
-        <v-card class="h-100">
-          <v-card-title class="text-green pb-4">Grade Distribution - {{ courseId }}</v-card-title>
-          <div class="graph-container pa-4" style="height: 400px">
-            <v-card-text>
-              <div style="width: 100%; height: 400px;">
-                <line-chart />
-              </div>
-            </v-card-text>
-          </div>
-        </v-card>
-      </v-col>
-
-      <!-- Right Side Panels -->
-      <v-col cols="12" md="5" class="pa-6">
-        <!-- Top Panel -->
-        <v-card class="mb-6">
-          <v-card-title class="text-green">Course Sentiment Summary</v-card-title>
-          <v-card-text>
-            <div class="sentiment-row mb-2">
-              <span>Very Positive comments</span>
-              <v-progress-linear
-                :model-value="sentimentPercentages.veryPositive"
-                color="yellow"
-                height="10"
-                class="progress-bar"
-              ></v-progress-linear>
-            </div>
-
-            <div class="sentiment-row mb-2">
-              <span>Positive comments</span>
-              <v-progress-linear
-                :model-value="sentimentPercentages.positive"
-                color="yellow"
-                height="10"
-                class="progress-bar"
-              ></v-progress-linear>
-            </div>
-
-            <div class="sentiment-row mb-2">
-              <span>Neutral comments</span>
-              <v-progress-linear
-                :model-value="sentimentPercentages.neutral"
-                color="yellow"
-                height="10"
-                class="progress-bar"
-              ></v-progress-linear>
-            </div>
-
-            <div class="sentiment-row mb-2">
-              <span>Negative  comments</span>
-              <v-progress-linear
-                :model-value="sentimentPercentages.negative"
-                color="yellow"
-                height="10"
-                class="progress-bar"
-              ></v-progress-linear>
-            </div>
-
-            <div class="sentiment-row mb-2">
-              <span>Very Negative comments</span>
-              <v-progress-linear
-                :model-value="sentimentPercentages.veryNegative"
-                color="yellow"
-                height="10"
-                class="progress-bar"
-              ></v-progress-linear>
-            </div>
-          </v-card-text>
-        </v-card>
-
-        <!-- Bottom Panel -->
-        <v-card>
-          <v-card-title class="text-green">Course Information</v-card-title>
-          <v-card-text>
-            <div class="text-body-1 mb-2">
-              <strong>Professor:</strong> Dr. Smith
-            </div>
-            <div class="text-body-1 mb-2">
-              <strong>Term:</strong> 2024W
-            </div>
-            <div class="text-body-1">
-              <strong>Description:</strong> Introduction to Software Engineering. 
-              Learn about software development lifecycle, testing, and project management.
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+ <template>
+  <v-btn @click="$emit('back')">Back to Courses</v-btn>
+  <h2>{{ courseId }}</h2>
+  <LineChart 
+    v-if="postDates.length > 0" 
+    :x-axis-data="postDates" 
+    :y-axis-data="postCounts" 
+  />
 </template>
 
-<!-- Styling -->
-<style scoped>
-.text-green {
-  color: #42b883 !important;
+<script setup>
+import { ref, watch } from 'vue'
+import LineChart from './LineChart.vue'
+import Papa from 'papaparse' // Make sure to install this library using npm install papaparse
+import { format, parseISO } from 'date-fns' // Library to handle dates. Install with npm install date-fns
+
+
+const props = defineProps(['courseId', 'file'])
+const emits = defineEmits(['back'])
+
+const postDates = ref([])
+const postCounts = ref([])
+
+const fetchData = () => {
+  // Use FileReader to read the CSV file from the local directory
+  fetch(props.file)
+    .then((response) => response.text())
+    .then((csvData) => {
+      processCsv(csvData)
+    })
+    .catch((error) => {
+      console.error('Error fetching course data:', error)
+    })
 }
 
-.text-body-1 {
-display: flex;
-justify-content: space-between;
-align-items: center;  
-}
+const processCsv = (csvData) => {
+  Papa.parse(csvData, {
+    header: true,
+    skipEmptyLines: true,
+    complete: (results) => {
+      const dateCountMap = new Map()
 
-.sentiment-row {
-display: flex;
-justify-content: space-between;
-align-items: center;
-}
+      // Iterate over each row in the CSV
+      results.data.forEach((row, index) => {
+        // Check if the 'post_timestamp' field exists and is not empty
+        if (!row['post_timestamp']) {
+          console.warn(`Skipping row ${index} with missing or undefined post_timestamp:`, row);
+          return;
+        }
 
-/* Progress bar styling to keep it smaller and aligned right */
-.progress-bar {
-  width: 50%; /* Adjust this width to control the size */
-  margin-left: 20px; /* Adds space between the text and the bar */
-}
+        // Log the keys of each row for debugging
+        if (index === 0) {
+          console.log("Row keys:", Object.keys(row)); // Log the keys of the first row to confirm column names
+        }
 
-/* Optional: Add padding or margin if needed for card text */
-.v-card-text {
-  padding-right: 10px;
-}
+        // Parse the timestamp using JavaScript's Date object after removing timezone
+        try {
+          // Remove the timezone abbreviation (e.g., "PDT") using a regex
+          const cleanedTimestamp = row["post_timestamp"].replace(/\s[A-Z]+$/, "");
 
-.graph-container {
-  width: 100%;
-  height: 100%;
-  min-height: 400px;
-}
+          // Create a new Date object and extract only the date (ignoring the time)
+          const fullDate = new Date(cleanedTimestamp);
+          const dateOnly = fullDate.toISOString().split("T")[0]; // Format as 'YYYY-MM-DD'
 
-:deep(.v-card) {
-  border-color: #42b883;
+          // Update the count for each date
+          if (dateCountMap.has(dateOnly)) {
+            dateCountMap.set(dateOnly, dateCountMap.get(dateOnly) + 1);
+          } else {
+            dateCountMap.set(dateOnly, 1);
+          }
+        } catch (error) {
+          console.error(`Error parsing date in row ${index}:`, row["post_timestamp"], error);
+        }
+      });
+
+      // Extract dates and counts into arrays
+      postDates.value = Array.from(dateCountMap.keys());
+      postCounts.value = Array.from(dateCountMap.values());
+
+      // Debugging: Log the parsed data
+      console.log("Parsed Dates:", postDates.value);
+      console.log("Parsed Counts:", postCounts.value);
+    }
+  })
 }
-</style>
+watch(() => props.file, fetchData, { immediate: true })
+</script>
+  
+  <style scoped>
+  .text-green {
+    color: #42b883 !important;
+  }
+  
+  .graph-container {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+  }
+  
+  :deep(.v-card) {
+    border-color: #42b883;
+  }
+  </style>
