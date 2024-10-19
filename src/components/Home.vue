@@ -147,7 +147,6 @@ const goToCourse = (faculty, section) => {
     </v-main>
   </v-app>
 </template>
-
 <style scoped>
 .text-green {
   color: #42b883 !important;

@@ -1,4 +1,3 @@
-
 <template>
     <v-col cols="12" sm="6" md="4">
       <v-card :ripple="true" class="course-card" variant="outlined" hover>
@@ -48,6 +47,10 @@
     height: 150px;
     object-fit: cover;
     margin-top: 10px;
+<<<<<<< HEAD
+=======
+
+>>>>>>> ff10bd10d4840f61f903f3bbf1790431351c2628
   }
   
   .course-card {
@@ -58,4 +61,3 @@
     transform: translateY(-2px);
   }
   </style>
-  
