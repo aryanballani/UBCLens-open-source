@@ -47,10 +47,6 @@
     height: 150px;
     object-fit: cover;
     margin-top: 10px;
-<<<<<<< HEAD
-=======
-
->>>>>>> ff10bd10d4840f61f903f3bbf1790431351c2628
   }
   
   .course-card {
