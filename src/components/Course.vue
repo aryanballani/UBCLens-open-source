@@ -1,4 +1,5 @@
 <script setup>
+  import Chatbot from './Chatbot.vue';
   import { useRouter } from 'vue-router'
   import { reactive , ref, onMounted} from 'vue'
   import { watch } from 'vue'
@@ -236,6 +237,7 @@
             </div>
           </v-card-text>
         </v-card>
+        <chatbot />
       </v-col>
     </v-row>
   </v-container>
