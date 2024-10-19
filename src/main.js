@@ -1,6 +1,7 @@
 // main.js
 import { createApp } from 'vue'
 import App from './App.vue'
+import VueApexCharts from "vue3-apexcharts";
 
 // Vuetify
 import 'vuetify/styles'
@@ -30,6 +31,5 @@ const app = createApp(App)
 
 // Use Vuetify
 app.use(vuetify)
-
-// Mount the app
+app.use(VueApexCharts)
 app.mount('#app')
