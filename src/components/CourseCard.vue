@@ -11,6 +11,7 @@
   </template>
   
   <script>
+  
   export default {
     props: {
       faculty: {
@@ -25,9 +26,14 @@
         type: String,
         required: true,
       },
+      courseId: {
+        type: String,
+        required: true,
+      }
     },
   };
   </script>
+  
   
   <style scoped>
   .text-green {
@@ -41,7 +47,6 @@
     height: 150px;
     object-fit: cover;
     margin-top: 10px;
-
   }
   
   .course-card {

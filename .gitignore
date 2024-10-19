@@ -31,3 +31,5 @@ coverage
 
 # venv
 backend/ollama.env
+# Virtual environments
+hackLA

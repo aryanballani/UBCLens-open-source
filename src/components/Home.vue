@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import CourseCard from './CourseCard.vue'; // Import CourseCard component
 
 // Data structure for courses
@@ -72,6 +73,14 @@ const filteredCourses = computed(() => {
     return matchesCourseName && matchesSection;
   });
 });
+
+const router = useRouter();
+
+// Function to navigate to a course page
+const goToCourse = (faculty, section) => {
+  router.push(`/course/${faculty}${section}`);
+};
+
 </script>
 
 <template>
@@ -80,9 +89,8 @@ const filteredCourses = computed(() => {
     <v-app-bar color="surface">
       <v-app-bar-title class="text-green">UBC Discussions</v-app-bar-title>
       <v-spacer></v-spacer>
-      <v-btn variant="text">View Discussions</v-btn>
-      <v-btn variant="text">Statistics</v-btn>
-      <v-btn variant="text">Help</v-btn>
+      <v-btn variant="text">Popular courses</v-btn>
+      <v-btn variant="text">About</v-btn>
     </v-app-bar>
 
     <!-- Main Content -->
@@ -131,6 +139,7 @@ const filteredCourses = computed(() => {
               :faculty="course.faculty"
               :section="course.section"
               :courseImage="course.image"
+              @click="goToCourse(course.faculty, course.section)"
             />
           </v-row>
         </v-card>
