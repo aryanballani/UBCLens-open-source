@@ -7,13 +7,13 @@ import CourseCard from './CourseCard.vue'; // Import CourseCard component
 const courses = ref([
   {
     faculty: "CPSC",
-    section: "310",
-    image: "https://via.placeholder.com/300?text=CPSC+310",
+    section: "320",
+    image: "https://via.placeholder.com/300?text=CPSC+320",
   },
   {
-    faculty: "SCIE",
-    section: "113",
-    image: "https://via.placeholder.com/300?text=SCIE+113",
+    faculty: "STAT",
+    section: "200",
+    image: "https://via.placeholder.com/300?text=STAT+200",
   },
   {
     faculty: "CPSC",
