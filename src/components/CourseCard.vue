@@ -41,6 +41,7 @@
     height: 150px;
     object-fit: cover;
     margin-top: 10px;
+
   }
   
   .course-card {
@@ -51,4 +52,3 @@
     transform: translateY(-2px);
   }
   </style>
-  

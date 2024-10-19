@@ -1,4 +1,3 @@
-<!-- src/App.vue -->
 <template>
   <v-app>
     <Home />
@@ -7,6 +6,7 @@
 
 <script>
 import Home from './components/Home.vue'; // Import Home component
+
 
 export default {
   components: {
