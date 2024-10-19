@@ -1,121 +1,88 @@
-<template>
-  <div class="home">
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-      <div class="nav-left">
-        <h1>UBC Discussions</h1>
-      </div>
-      <div class="nav-right">
-        <button @click="goToHome">Home</button>
-        <button @click="goToAbout">About</button>
-      </div>
-    </nav>
+<!-- src/components/Home.vue -->
+<script setup>
+import { ref } from 'vue';
+import CourseCard from './CourseCard.vue'; // Import CourseCard component
 
-    <!-- Main Content -->
-    <div class="content">
-      <h2>Welcome to the Course Selection Page</h2>
-      <input 
-        type="text" 
-        v-model="searchQuery" 
-        placeholder="Search for a course..." 
-        @input="filterCourses"
-      />
-      
-      <ul v-if="filteredCourses.length">
-        <li v-for="course in filteredCourses" :key="course.id">{{ course.name }}</li>
-      </ul>
-      <p v-else>No courses found</p>
-    </div>
-  </div>
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      searchQuery: '',  // Search bar input
-      courses: [        // Mock course data
-        { id: 1, name: 'Intro to Machine Learning' },
-        { id: 2, name: 'Data Structures and Algorithms' },
-        { id: 3, name: 'Introduction to Vue.js' },
-        { id: 4, name: 'Advanced React' }
-      ],
-      filteredCourses: []
-    };
-  },
-  methods: {
-    filterCourses() {
-      // Filters courses based on search query
-      this.filteredCourses = this.courses.filter(course =>
-        course.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
-    },
-    goToHome() {
-      // Logic to navigate to home page (can use Vue Router if you have it)
-      alert('Navigating to Home!');
-    },
-    goToAbout() {
-      // Logic to navigate to about page (can use Vue Router if you have it)
-      alert('Navigating to About!');
-    }
-  },
-  created() {
-    // Initially show all courses
-    this.filteredCourses = this.courses;
-  }
-};
+const courses = ref(['CPSC 310', 'SCIE 113', 'CPSC 213']);
 </script>
 
+<template>
+  <v-app theme="dark">
+    <!-- Navigation Bar -->
+    <v-app-bar color="surface">
+      <v-app-bar-title class="text-green">UBC Discussions</v-app-bar-title>
+      <v-spacer></v-spacer>
+      <v-btn variant="text">View Discussions</v-btn>
+      <v-btn variant="text">Statistics</v-btn>
+      <v-btn variant="text">Help</v-btn>
+    </v-app-bar>
+
+    <!-- Main Content -->
+    <v-main>
+      <!-- Search Form Section -->
+      <v-container class="py-8" style="background-color: #333;">
+        <v-card class="pa-6">
+          <v-card-title class="text-h5 mb-6">View Discussions by Section</v-card-title>
+          
+          <!-- Search Form -->
+          <v-row class="mb-6">
+            <v-col cols="12" sm="6" md="3">
+              <v-select
+                label="Year/Session"
+                :items="['2023W', '2024W']"
+                variant="outlined"
+                color="green"
+              ></v-select>
+            </v-col>
+            
+            <v-col cols="12" sm="6" md="3">
+              <v-select
+                label="Subject"
+                :items="['CPSC', 'SCIE']"
+                variant="outlined"
+                color="green"
+              ></v-select>
+            </v-col>
+            
+            <v-col cols="12" sm="6" md="3">
+              <v-select
+                label="Course #"
+                :items="['310', '213', '113']"
+                variant="outlined"
+                color="green"
+              ></v-select>
+            </v-col>
+            
+            <v-col cols="12" sm="6" md="3">
+              <v-select
+                label="Section"
+                :items="['001', '002']"
+                variant="outlined"
+                color="green"
+              ></v-select>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-container>
+
+      <!-- Course Grid Section -->
+      <v-container class="py-8" style="background-color: #1e1e1e;">
+        <v-card class="pa-6">
+          <v-row>
+            <CourseCard
+              v-for="course in courses"
+              :key="course"
+              :course="course"
+            />
+          </v-row>
+        </v-card>
+      </v-container>
+    </v-main>
+  </v-app>
+</template>
+
 <style scoped>
-/* Navigation Bar Styles */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #333;
-  padding: 10px;
-  color: white;
-}
-
-.nav-left h1 {
-  margin: 0;
-  font-size: 24px;
-}
-
-.nav-right button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  margin-left: 10px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.nav-right button:hover {
-  background-color: #45a049;
-}
-
-/* Main Content Styles */
-.home .content {
-  text-align: center;
-  margin-top: 20px;
-}
-
-input {
-  padding: 10px;
-  width: 80%;
-  margin-bottom: 20px;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-li {
-  padding: 10px;
-  background-color: #f0f0f0;
-  margin: 5px 0;
+.text-green {
+  color: #42b883 !important;
 }
 </style>
