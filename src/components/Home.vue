@@ -1,9 +1,77 @@
-<!-- src/components/Home.vue -->
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import CourseCard from './CourseCard.vue'; // Import CourseCard component
 
-const courses = ref(['CPSC 310', 'SCIE 113', 'CPSC 213']);
+// Data structure for courses
+const courses = ref([
+  {
+    faculty: "CPSC",
+    section: "310",
+    image: "https://via.placeholder.com/300?text=CPSC+310",
+  },
+  {
+    faculty: "SCIE",
+    section: "113",
+    image: "https://via.placeholder.com/300?text=SCIE+113",
+  },
+  {
+    faculty: "CPSC",
+    section: "213",
+    image: "https://via.placeholder.com/300?text=CPSC+213",
+  },
+  {
+    faculty: "WRDS",
+    section: "150B",
+    image: "https://via.placeholder.com/300?text=WRDS+150B",
+  },
+  {
+    faculty: "CPSC",
+    section: "210",
+    image: "https://via.placeholder.com/300?text=CPSC+210",
+  },
+  {
+    faculty: "PHYS",
+    section: "317",
+    image: "https://via.placeholder.com/300?text=PHYS+317",
+  },
+]);
+
+// User input for filtering
+const courseQuery = ref('');
+const sectionQuery = ref('');
+
+// Input validation for courseQuery to allow only letters and restrict length to 4
+const handleCourseInput = (event) => {
+  const regex = /^[A-Za-z]+$/;
+  if (!regex.test(event.key) || courseQuery.value.length >= 4) {
+    event.preventDefault();  // Prevent non-letter and additional characters after 4 letters
+  }
+};
+
+// Input validation to only allow digits in section input
+const handleSectionInput = (event) => {
+  const regex = /^[0-9]*$/;
+  if (!regex.test(event.key)) {
+    event.preventDefault();
+  }
+};
+
+// Computed property to filter courses based on user input
+const filteredCourses = computed(() => {
+  return courses.value.filter(course => {
+    // Filter by course name if courseQuery is not empty
+    const matchesCourseName = courseQuery.value
+      ? course.faculty.toLowerCase().includes(courseQuery.value.toLowerCase())
+      : true;
+
+    // Filter by section if sectionQuery is not empty
+    const matchesSection = sectionQuery.value
+      ? course.section.includes(sectionQuery.value)
+      : true;
+
+    return matchesCourseName && matchesSection;
+  });
+});
 </script>
 
 <template>
@@ -23,43 +91,31 @@ const courses = ref(['CPSC 310', 'SCIE 113', 'CPSC 213']);
       <v-container class="py-8" style="background-color: #333;">
         <v-card class="pa-6">
           <v-card-title class="text-h5 mb-6">View Discussions by Section</v-card-title>
-          
-          <!-- Search Form -->
+
+          <!-- Input Fields for Filtering Courses by Name and Section -->
           <v-row class="mb-6">
-            <v-col cols="12" sm="6" md="3">
-              <v-select
-                label="Year/Session"
-                :items="['2023W', '2024W']"
+            <!-- Course Name Filter (Exactly 4 Letters Only) -->
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                v-model="courseQuery"
+                label="Search by Course (4 Letters Only)"
                 variant="outlined"
                 color="green"
-              ></v-select>
+                @keypress="handleCourseInput"
+                maxlength="4"
+              ></v-text-field>
             </v-col>
-            
-            <v-col cols="12" sm="6" md="3">
-              <v-select
-                label="Subject"
-                :items="['CPSC', 'SCIE']"
+
+            <!-- Section Filter (Numbers Only) -->
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                v-model="sectionQuery"
+                label="Search by Section (Numbers)"
                 variant="outlined"
                 color="green"
-              ></v-select>
-            </v-col>
-            
-            <v-col cols="12" sm="6" md="3">
-              <v-select
-                label="Course #"
-                :items="['310', '213', '113']"
-                variant="outlined"
-                color="green"
-              ></v-select>
-            </v-col>
-            
-            <v-col cols="12" sm="6" md="3">
-              <v-select
-                label="Section"
-                :items="['001', '002']"
-                variant="outlined"
-                color="green"
-              ></v-select>
+                type="text"
+                @keypress="handleSectionInput"
+              ></v-text-field>
             </v-col>
           </v-row>
         </v-card>
@@ -67,12 +123,14 @@ const courses = ref(['CPSC 310', 'SCIE 113', 'CPSC 213']);
 
       <!-- Course Grid Section -->
       <v-container class="py-8" style="background-color: #1e1e1e;">
-        <v-card class="pa-6">
+        <v-card class="pa-6"> 
           <v-row>
             <CourseCard
-              v-for="course in courses"
-              :key="course"
-              :course="course"
+              v-for="course in filteredCourses"
+              :key="course.faculty + course.section"
+              :faculty="course.faculty"
+              :section="course.section"
+              :courseImage="course.image"
             />
           </v-row>
         </v-card>
@@ -80,7 +138,6 @@ const courses = ref(['CPSC 310', 'SCIE 113', 'CPSC 213']);
     </v-main>
   </v-app>
 </template>
-
 <style scoped>
 .text-green {
   color: #42b883 !important;
