@@ -11,7 +11,7 @@ const courses = ref(['CPSC 310', 'SCIE 113', 'CPSC 213'])
     <v-app-bar color="surface">
       <v-app-bar-title class="text-green">UBC Discussions</v-app-bar-title>
       <v-spacer></v-spacer>
-      <v-btn variant="text">View Grades</v-btn>
+      <v-btn variant="text">View Discussions</v-btn>
       <v-btn variant="text">Statistics</v-btn>
       <v-btn variant="text">Help</v-btn>
     </v-app-bar>
