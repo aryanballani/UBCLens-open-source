@@ -29,12 +29,11 @@ coverage
 
 *.tsbuildinfo
 
-# Virtual environments
 hackLA
 # virtual env
 backend/ollama.env
 
-# virtual env
+# venv
 backend/ollama.env
 # Virtual environments
 hackLA
