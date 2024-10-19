@@ -1,7 +1,6 @@
 <script setup>
   import { defineProps } from 'vue'
   import { useRouter } from 'vue-router'
-  import LineChart from './LineChart.vue'
   import { reactive } from 'vue'
   
   // Defining props
@@ -16,7 +15,7 @@
   const router = useRouter()
   
   const goBack = () => {
-    router.push('/#app')
+    router.push('/')
   }
 
   // Reactive object for sentiment percentages
@@ -27,6 +26,7 @@
     negative: 15,
     veryNegative: 10
   })
+
 </script>
 
 
