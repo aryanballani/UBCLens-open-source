@@ -35,41 +35,40 @@ def writeback(filename, counts, size):
 
 # Example usage
 if __name__ == "__main__":
-    # CPSC 213
-    sentimentPredictions213 = []
-    messages = read_data("backend/data/CPSC_213_Data_5.csv")
-    tempMessages = messages[:2000]
-    for message in tempMessages:
-        sentiment, probabilities = analyze_sentiment(message)
-        sentimentPredictions213.append(sentiment)
-        # print(f"Message: {message}")
-        # print(f"Sentiment: {sentiment}")
-
-    # Count sentiment predictions
-    size213 = len(sentimentPredictions213)
-    series213 = pd.Series(sentimentPredictions213)
-    counts213 = series213.value_counts()
-    print(counts213)
-    writeback("CPSC_213_Percentages", counts213, size213)
-    print("CPSC 213 Sentiment Predictions Done")
-
-    # # STAT 200
-    # sentimentPredictions200 = []
-    # messages = read_data("backend/CPSC_213_Data_4.csv")
-    # tempMessages = messages[328:342]
+    # # CPSC 213
+    # sentimentPredictions213 = []
+    # messages = read_data("backend/data/CPSC_213_Data_5.csv")
+    # tempMessages = messages[:2000]
     # for message in tempMessages:
     #     sentiment, probabilities = analyze_sentiment(message)
-    #     sentimentPredictions200.append(sentiment)
+    #     sentimentPredictions213.append(sentiment)
     #     # print(f"Message: {message}")
     #     # print(f"Sentiment: {sentiment}")
 
     # # Count sentiment predictions
-    # size200 = len(sentimentPredictions200)
-    # series200 = pd.Series(sentimentPredictions200)
-    # counts200 = series200.value_counts()
-    # print(counts200)
-    # writeback("STAT_200_Percentages", counts200, size200)
-    # print("STAT 200 Sentiment Predictions Done")
+    # size213 = len(sentimentPredictions213)
+    # series213 = pd.Series(sentimentPredictions213)
+    # counts213 = series213.value_counts()
+    # print(counts213)
+    # writeback("CPSC_213_Percentages", counts213, size213)
+    # print("CPSC 213 Sentiment Predictions Done")
+
+    # STAT 200
+    sentimentPredictions200 = []
+    messages = read_data("backend/data/STAT_200_Discussion_Data.csv")
+    for message in messages:
+        sentiment, probabilities = analyze_sentiment(message)
+        sentimentPredictions200.append(sentiment)
+        # print(f"Message: {message}")
+        # print(f"Sentiment: {sentiment}")
+
+    # Count sentiment predictions
+    size200 = len(sentimentPredictions200)
+    series200 = pd.Series(sentimentPredictions200)
+    counts200 = series200.value_counts()
+    print(counts200)
+    writeback("STAT_200_Percentages", counts200, size200)
+    print("STAT 200 Sentiment Predictions Done")
 
     # # CPSC 221
     # sentimentPredictions221 = []
