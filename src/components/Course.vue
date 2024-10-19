@@ -1,7 +1,8 @@
 <script setup>
   import { defineProps } from 'vue'
   import { useRouter } from 'vue-router'
-  import { reactive } from 'vue'
+  import { reactive , ref, onMounted} from 'vue'
+  
   
   // Defining props
   const props = defineProps({
@@ -18,15 +19,35 @@
     router.push('/')
   }
 
+
   // Reactive object for sentiment percentages
-  const sentimentPercentages = reactive({
-    veryPositive: 25,
-    positive: 30,
-    neutral: 20,
-    negative: 15,
-    veryNegative: 10
+  var sentimentPercentages = reactive({
+    veryPositive: 50,
+    positive: 0,
+    neutral: 0,
+    negative: 0,
+    veryNegative: 0
   })
 
+  const isLoading = ref(true); // New loading state
+
+
+  onMounted(async () => {
+  try {
+    const sentimentData = await import(`../../data/sentiment_analysis/${props.courseId}.json`);
+    sentimentPercentages = {
+      veryPositive: sentimentData.veryPositive,
+      positive: sentimentData.positive,
+      neutral: sentimentData.neutral,
+      negative: sentimentData.negative,
+      veryNegative: sentimentData.veryNegative,
+    };
+  } catch (error) {
+    console.error("Failed to load sentiment data:", error);
+  } finally {
+    isLoading.value = false;
+  }
+});
 </script>
 
 
@@ -68,54 +89,58 @@
         <v-card class="mb-6">
           <v-card-title class="text-green">Course Sentiment Summary</v-card-title>
           <v-card-text>
-            <div class="sentiment-row mb-2">
-              <span>Very Positive comments</span>
-              <v-progress-linear
-                :model-value="sentimentPercentages.veryPositive"
-                color="yellow"
-                height="10"
-                class="progress-bar"
-              ></v-progress-linear>
-            </div>
+            <!-- Conditional Rendering -->
+            <div v-if="isLoading">Loading sentiment data...</div>
+            <div v-else>
+              <div class="sentiment-row mb-2">
+                <span>Very Positive comments</span>
+                <v-progress-linear
+                  :model-value="sentimentPercentages.veryPositive"
+                  color="yellow"
+                  height="10"
+                  class="progress-bar"
+                ></v-progress-linear>
+              </div>
 
-            <div class="sentiment-row mb-2">
-              <span>Positive comments</span>
-              <v-progress-linear
-                :model-value="sentimentPercentages.positive"
-                color="yellow"
-                height="10"
-                class="progress-bar"
-              ></v-progress-linear>
-            </div>
+              <div class="sentiment-row mb-2">
+                <span>Positive comments</span>
+                <v-progress-linear
+                  :model-value="sentimentPercentages.positive"
+                  color="yellow"
+                  height="10"
+                  class="progress-bar"
+                ></v-progress-linear>
+              </div>
 
-            <div class="sentiment-row mb-2">
-              <span>Neutral comments</span>
-              <v-progress-linear
-                :model-value="sentimentPercentages.neutral"
-                color="yellow"
-                height="10"
-                class="progress-bar"
-              ></v-progress-linear>
-            </div>
+              <div class="sentiment-row mb-2">
+                <span>Neutral comments</span>
+                <v-progress-linear
+                  :model-value="sentimentPercentages.neutral"
+                  color="yellow"
+                  height="10"
+                  class="progress-bar"
+                ></v-progress-linear>
+              </div>
 
-            <div class="sentiment-row mb-2">
-              <span>Negative  comments</span>
-              <v-progress-linear
-                :model-value="sentimentPercentages.negative"
-                color="yellow"
-                height="10"
-                class="progress-bar"
-              ></v-progress-linear>
-            </div>
+              <div class="sentiment-row mb-2">
+                <span>Negative comments</span>
+                <v-progress-linear
+                  :model-value="sentimentPercentages.negative"
+                  color="yellow"
+                  height="10"
+                  class="progress-bar"
+                ></v-progress-linear>
+              </div>
 
-            <div class="sentiment-row mb-2">
-              <span>Very Negative comments</span>
-              <v-progress-linear
-                :model-value="sentimentPercentages.veryNegative"
-                color="yellow"
-                height="10"
-                class="progress-bar"
-              ></v-progress-linear>
+              <div class="sentiment-row mb-2">
+                <span>Very Negative comments</span>
+                <v-progress-linear
+                  :model-value="sentimentPercentages.veryNegative"
+                  color="yellow"
+                  height="10"
+                  class="progress-bar"
+                ></v-progress-linear>
+              </div>
             </div>
           </v-card-text>
         </v-card>

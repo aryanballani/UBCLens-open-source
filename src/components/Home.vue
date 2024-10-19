@@ -78,7 +78,7 @@ const router = useRouter();
 
 // Function to navigate to a course page
 const goToCourse = (faculty, section) => {
-  router.push(`/course/${faculty.toLowerCase()}-${section}`);
+  router.push(`/course/${faculty}${section}`);
 };
 
 </script>
