@@ -1,4 +1,5 @@
 <script setup>
+  import Chatbot from './Chatbot.vue';
   import { defineProps } from 'vue'
   import { useRouter } from 'vue-router'
   import { reactive } from 'vue'
@@ -136,6 +137,7 @@
             </div>
           </v-card-text>
         </v-card>
+        <chatbot />
       </v-col>
     </v-row>
   </v-container>
