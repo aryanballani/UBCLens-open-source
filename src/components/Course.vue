@@ -91,6 +91,7 @@
     router.push('/')
   }
 
+  const keywords = ref(["Loading............."]);
 
   // Reactive object for sentiment percentages
   var sentimentPercentages = reactive({
@@ -103,23 +104,36 @@
 
   const isLoading = ref(true); // New loading state
 
+  const loadKeywords = async () => {
+    try {
+      const response = await fetch(`../../data/keywords/${props.courseId}.json`); // Adjust the path as needed
+      const data = await response.json();
+      // Assuming the JSON structure is as you've shown
+      keywords.value = Object.values(data); // Extract values from the JSON
+    } catch (error) {
+      console.error('Error loading keywords:', error);
+    }
+  };
 
-  onMounted(async () => {
-  try {
-    const sentimentData = await import(`../../data/sentiment_analysis/${props.courseId}.json`);
-    sentimentPercentages = {
-      veryPositive: sentimentData.veryPositive,
-      positive: sentimentData.positive,
-      neutral: sentimentData.neutral,
-      negative: sentimentData.negative,
-      veryNegative: sentimentData.veryNegative,
-    };
-  } catch (error) {
-    console.error("Failed to load sentiment data:", error);
-  } finally {
-    isLoading.value = false;
-  }
-});
+  const loadSentimentData = async () => {
+    try {
+      const sentimentData = await import(`../../data/sentiment_analysis/${props.courseId}.json`);
+      sentimentPercentages = {
+        veryPositive: sentimentData.veryPositive,
+        positive: sentimentData.positive,
+        neutral: sentimentData.neutral,
+        negative: sentimentData.negative,
+        veryNegative: sentimentData.veryNegative,
+      };
+      loadKeywords();
+    } catch (error) {
+      console.error("Failed to load sentiment data:", error);
+    } finally {
+      isLoading.value = false;
+    }
+  };
+
+  onMounted(loadSentimentData);
 </script>
 
 
@@ -222,21 +236,27 @@
         </v-card>
 
         <!-- Bottom Panel -->
-        <v-card>
-          <v-card-title class="text-green">Course Information</v-card-title>
+        <v-card class="pa-4 mt-4">
+          <v-card-title class="text-green font-weight-bold">Top Course Keywords</v-card-title>
           <v-card-text>
-            <div class="text-body-1 mb-2">
-              <strong>Professor:</strong> Dr. Smith
+            <div v-if="keywords.length">
+              <strong>Keywords:</strong>
+              <v-list dense class="pl-2">
+                <v-list-item v-for="(keyword, index) in keywords" :key="index" class="py-1">
+                  <v-list-item-content>
+                    <v-list-item-title>{{ keyword }}</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
             </div>
-            <div class="text-body-1 mb-2">
-              <strong>Term:</strong> 2024W
-            </div>
-            <div class="text-body-1">
-              <strong>Description:</strong> Introduction to Software Engineering. 
-              Learn about software development lifecycle, testing, and project management.
+            <div v-else>
+              <v-skeleton-loader type="list-item" />
+              <p class="text-subtitle-1 text-center text--secondary">Loading keywords...</p>
             </div>
           </v-card-text>
         </v-card>
+
+
         <chatbot />
       </v-col>
     </v-row>

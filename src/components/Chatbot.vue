@@ -18,8 +18,12 @@ const submitInput = async () => {
 
     // Store user's message
     const prompt = userInput.value.trim();
+    
+
     userInput.value = ''; // Clear the input field
 
+    // Set the role description for the chatbot
+    const introductoryContext = `You are a custom chatbot for a user looking at course information such as sentiments, responses from students each day. Now this is the user's prompt:`;
     // Set loading state to true
     loading.value = true;
 

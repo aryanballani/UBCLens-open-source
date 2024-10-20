@@ -8,32 +8,37 @@ const courses = ref([
   {
     faculty: "CPSC",
     section: "320",
-    image: "https://via.placeholder.com/300?text=CPSC+320",
+    image: "../../data/icons/course_img.png",
   },
   {
     faculty: "STAT",
     section: "200",
-    image: "https://via.placeholder.com/300?text=STAT+200",
+    image: "../../data/icons/course_img.png",
   },
   {
     faculty: "CPSC",
     section: "213",
-    image: "https://via.placeholder.com/300?text=CPSC+213",
+    image: "../../data/icons/course_img.png",
+  },
+  {
+    faculty: "hack-",
+    section: "la",
+    image: "../../data/icons/course_img.png",
   },
   {
     faculty: "WRDS",
     section: "150B",
-    image: "https://via.placeholder.com/300?text=WRDS+150B",
+    image: "../../data/icons/course_img.png",
   },
   {
     faculty: "CPSC",
     section: "210",
-    image: "https://via.placeholder.com/300?text=CPSC+210",
+    image: "../../data/icons/course_img.png",
   },
   {
     faculty: "PHYS",
     section: "317",
-    image: "https://via.placeholder.com/300?text=PHYS+317",
+    image: "../../data/icons/course_img.png",
   },
 ]);
 
@@ -87,7 +92,7 @@ const goToCourse = (faculty, section) => {
   <v-app theme="dark">
     <!-- Navigation Bar -->
     <v-app-bar color="surface">
-      <v-app-bar-title class="text-green">UBC Discussions</v-app-bar-title>
+      <v-app-bar-title class="text-green">UBC Lens</v-app-bar-title>
       <v-spacer></v-spacer>
       <v-btn variant="text">Popular courses</v-btn>
       <v-btn variant="text">About</v-btn>
@@ -96,7 +101,7 @@ const goToCourse = (faculty, section) => {
     <!-- Main Content -->
     <v-main>
       <!-- Search Form Section -->
-      <v-container class="py-8" style="background-color: #333;">
+      <v-container class="py-8" style="background-color: #444;">
         <v-card class="pa-6">
           <v-card-title class="text-h5 mb-6">View Discussions by Section</v-card-title>
 
@@ -125,12 +130,22 @@ const goToCourse = (faculty, section) => {
                 @keypress="handleSectionInput"
               ></v-text-field>
             </v-col>
+
+
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                label="Academic Year (For scaling later)"
+                variant="outlined"
+                color="green"
+              ></v-text-field>
+            </v-col>
+
           </v-row>
         </v-card>
       </v-container>
 
       <!-- Course Grid Section -->
-      <v-container class="py-8" style="background-color: #1e1e1e;">
+      <v-container class="py-8" style="background-color: #333;">
         <v-card class="pa-6"> 
           <v-row>
             <CourseCard
@@ -144,6 +159,26 @@ const goToCourse = (faculty, section) => {
           </v-row>
         </v-card>
       </v-container>
+
+      <v-container class="py-8" style="background-color: #444;">
+        <v-row justify="center">
+          <v-card class="pa-6">
+            <v-card-title class="text-h5 text-center mb-4 font-weight-bold">About</v-card-title>
+
+            <v-card-text class="text-center text-body-1">
+              Our application leverages advanced sentiment analysis and count vectorization techniques to identify top keywords, highlighting what's popular in each course. 
+              We also provide a graph for each course, showcasing the frequency of discussions over time, helping users gain valuable insights into course engagement.
+            </v-card-text>
+
+            <!-- Input Fields for Filtering Courses by Name and Section (Placeholder) -->
+            <v-row class="mb-6">
+              <!-- Add any additional inputs or filters here if needed -->
+            </v-row>
+          </v-card>
+        </v-row>
+      </v-container>
+
+
     </v-main>
   </v-app>
 </template>
