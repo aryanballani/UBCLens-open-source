@@ -1,80 +1,42 @@
-# 2024 Fall Learning Analytics Hackathon
-Welcome to the 10th Learning Analytics hackathon. This year, the goal is for you to find creative ways to use Canvas discussion data to improve the teaching or learning experience. Imagine you had data that represented all of the discussion activity in a Canvas course – what would you build?
+# I Hacked-LA-2024
+List your group members:
+> Divyansh Sharma
 
-## Before the Hackathon
-* Please **[register](https://events.ctlt.ubc.ca/events/2024-fall-learning-analytics-hackathon/)** for the hackathon if you haven't ready done so.
-* Find a team (we suggest at least 3 per team, with a **maximum of 5**) (you will sign up your team in Canvas once we send the enrolment link). Individual team members **should all register for the event!** 
-* Review the challenge details, data, and other materials (to be provided in Canvas at least 2 weeks before the event).
-* Some details are still being planned, and we will communicate after registration.
+> Aryan Ballani
 
-## 📅 Schedule
-### Saturday October 19th
-* 9:00am - Doors open (Coffee and light refreshments provided)
-* 9:30am to 10am - Welcome and Overview 
-* 10am to Noon - Start Hacking
-* 12pm to 1pm - Lunch (provided)
-* 1pm to 4pm - Keep Hacking
-* 4pm to 5pm - Work on presentations (Dinner provided!)
-* 5pm - Presentations Start
-* 7pm - End of Hackathon!
+> Kanish Khanna
 
-## 🔨 What You'll Build
-The discussions in Canvas are rich with content that serve as a great data source for learning analytics, allowing educators, researchers, and intelligent hackathon participants to analyze student engagement, collaboration, sentiment, learning progress, among other factors to help improve teaching and learning. Your task is to build something that can be used to analyze and make sense of this discussion data. 
+> Yiquan Liu
 
-Feeling stuck? [Check out this past hackathon repo for more ideas!](https://github.com/UBC-LA-Hackathon/student-dashboard)
+> Ankur Bhardwaj
 
-## 🧰 Where to Start
-You can decide with your team what programming languages and frameworks/libraries to work with. If you need somewhere to get started with using the Canvas API, check out these two starter kits that we created: 
-* [Getting Started with the Canvas API with Node.js/JavaScript](https://github.com/ubc/getting-started-with-the-canvas-api-with-node)
-* [Getting Started with the Canvas API with Python](https://github.com/ubc/getting-started-with-the-canvas-api-with-python)
-
-### 🍴 Fork this repo
-To keep all of the repositories you'll be creating loosely linked to this repo, please: 
-
-1. Fork this repo.
-![fork](./_assets/fork.png)
-1. Copy clone link.
-![clone](./_assets/clone.png)
-1. Open terminal on Mac or command line on Windows. We like to use [VSCode's integrated terminal](https://code.visualstudio.com/docs/editor/integrated-terminal), as it works for both Mac and PC.
-1. Clone repo. `git clone {paste URL you copied}`
-1. Navigate into repo. `cd hack-la-2024`
-1. Create your project in this repo.
-
-## 📚 What You'll Learn
-By participating in this hackathon, you'll learn to:
-
-* use the [Canvas API](https://canvas.instructure.com/doc/api/)
-* explore the data that [Canvas collects from you](https://learninganalytics.ubc.ca/ethics-policy/students-learning-analytics-and-privacy/)
-* contribute to [open source projects](https://docs.github.com/en/get-started/quickstart/contributing-to-projects) (like this hackathon!)
-* apply data analytics and programming skills
-* work in a team
-* build cool stuff!
-
-## 🚀 "Submitting" and Presentations
-This repo contains the file `submission.md`. Please fill this out including any links or additional information about your  project and presentation. You can add any project folders/files here too! 
-
-⚠️ Be careful to avoid committing: real data containing private information or intellectual property or Canvas API tokens!
-
-When you're ready you can make a PR (which won't be merged!) so that we can find your content! 
-
-1. From your fork once you've made all of your commits (including updating submissions.md) you can open a pull request
-![open PR from fork](./_assets/openPR1.png)
-
-2. Add a title and description (your team name and project description would be good here)
-![add title and description](./_assets/openPR2.png)
-
-**Note:** It is normal to see warnings "Review required" and "Merging is blocked" (we aren't going to be merging your PRs into the main repo).
-
-3. If you return to the main repo https://github.com/UBC-LA-Hackathon/hack-la-2024 and look at Pull Requests, you can see your PR associated with the hack-la-2024 repo! 
-![see PRs](./_assets/openPR3.png)
+# This Project
+> Link to presentation: https://docs.google.com/presentation/d/1YN8AtAZXZ0r3MUmAFQZXwMceFUEDUzPNdY-BK6KyXN8/edit#slide=id.g30cac874191_0_13 
 
 
-## 🤔 Ask For Help
-Please ask the volunteers and your peers for help. We're all here to learn together!
 
-## Additional resources:
-- [Guide for using the Canvas API](https://learninganalytics.ubc.ca/for-students/canvas-api/)
-- [Python Canvas API Starter Kit](https://github.com/ubc/getting-started-with-the-canvas-api-with-python)
-- [NodeJS Canvas API Starter Kit](https://github.com/ubc/getting-started-with-the-canvas-api-with-node)
-- [Canvas API Documentation](https://canvas.instructure.com/doc/api/)
-- [Canvas API Live](https://canvas.ubc.ca/doc/api/live#!/)
+> Give a brief description of the final product:
+
+Choosing the right course at UBC can feel overwhelming. You check UBC Grades for averages and RateMyProf for reviews, but there’s still something missing: what’s the actual environment inside the course? Are discussions lively or disengaged? Until now, there hasn’t been an easy way to find out.
+
+Introducing UBC Lens – a web app that gives students a real insider’s perspective on courses. Using data from Canvas, UBC Lens goes beyond grades and ratings. It employs sentiment analysis to capture the mood in discussions, count vectorization to highlight key topics and trends, and frequency metrics to measure student engagement levels.
+
+UBC Lens offers more than just surface-level information. By analyzing real interactions, it helps students choose courses where they can thrive and truly connect with their learning experience.
+
+# Reflection
+## Approach
+> What was your approach to the dataset? What problem did you want to solve? What technology did you decide to use? How did your team split the work?
+
+
+Since all of us are not taking any courses that use the canvas discussions, we decided to create mock data by replicating how the actual data would look like if we retrive it using canvas API, we also used the the hack-la data from the hackathon canvas course and could find key insights. 
+
+The problem we are solving is to give students a platform where they can view the keywords, how people respond to queries, and also a chat bot using meta llama 3.2, which can answer any questions that the user has.
+
+We used vue.js and vite for the frontend. In addition to that we also use Ollama for the chatbot.
+The team was split into 3 parts: 3 people for the frontend, 1 for sentiment analysis and frontend, 1 for implementing the chatbot and creating the mock data.
+# Wins / Challenges
+> Describe some wins / challenges. What did you learn? What would you do differently next time?
+
+Through this project we were able to grasp the concept of using the canvas API and vue.js to create a web app. We also learned how to host a chatbot using Ollama LLM and conducting sentiment analysis using a pre-trained model. Since, we were a team of 5 people, we faced challenges with merging and pull requests. One thing we would do differently next time is to use the github actions to automate the process of merging and pull requests.
+
+
