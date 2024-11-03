@@ -3,7 +3,6 @@
   import { useRouter } from 'vue-router'
   import { reactive , ref, onMounted} from 'vue'
   import { watch } from 'vue'
-  import LineChart from './LineChart.vue'
   import Papa from 'papaparse' // Make sure to install this library using npm install papaparse
   import { format, parseISO } from 'date-fns' // Library to handle dates. Install with npm install date-fns
 
